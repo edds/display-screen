@@ -9,7 +9,7 @@
     $el: false,
 
     endpoint: function(){
-      return "https://www.performance.service.gov.uk/data/govuk/trending?limit=10&sort_by=percent_change:descending";
+      return "https://www.performance.service.gov.uk/data/govuk/trending?limit=15&sort_by=percent_change:descending";
     },
     parseResponse: function(data){
       var i, _i, title;
@@ -37,7 +37,7 @@
       content.$el = $('#content');
 
       content.reload();
-      window.setInterval(content.reload, 60e3 * 60 * 12); // refresh every 12 hours
+      window.setInterval(content.reload, 60e3 * 60 * 3); // refresh every 3 hours
     },
     reload: function(){
       var endpoint = content.endpoint();
