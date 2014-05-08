@@ -1,0 +1,65 @@
+<!doctype html>
+
+<title>Data Screen</title>
+<link rel="stylesheet" href="./stylesheets/base.css">
+<link href="https://assets.digital.cabinet-office.gov.uk/static/fonts-0fb6b917e34e45c93a44eec72dcc21de.css" media="all" rel="stylesheet" type="text/css">
+
+<div class="searches"><div class="box-inner">
+  <h1>Live searches on GOV.UK:</h1>
+  <ul id="search"></ul>
+</div></div>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="javascripts/vendor/mustache.js"></script>
+<script src="javascripts/vendor/pretty.js"></script>
+
+<script src="javascripts/template.js"></script>
+<script src="javascripts/search.js"></script>
+
+<script src="javascripts/manager-search.js"></script>
+<script>
+  if(typeof window.matrix === 'undefined'){ window.matrix = {}; }
+
+  matrix.settings = {
+    authServer: '/token',
+    profileId: '67465768'
+  };
+
+  $(function(){
+   matrix.manager.init();
+  });
+</script>
+<script type="text/mustache" id="select-options">
+  <option value="">Select {{object}}</option>
+  {{#options}}
+    <option value="{{id}}">{{name}}</option>
+  {{/options}}
+</script>
+<script type="text/mustache" id="content-results">
+  {{#pages}}
+    <li>
+      {{ title }}
+      <em>
+        visits: {{displayHits}}
+        <span class="triangle">&#x25b2;</span>&nbsp;<span class="percent">{{percentageUp}}</span>
+      </em>
+    </li>
+  {{/pages}}
+</script>
+<script type="text/mustache" id="inside-gov-posts">
+  {{#posts}}
+    <li>{{ title }}<em>{{type}} - <span title="{{published}}">{{published}}</span></em></li>
+  {{/posts}}
+</script>
+<script type="text/mustache" id="tweets">
+  {{#tweets}}
+    <li class="tweet">
+      <img src="{{img}}">
+      <div class="text">
+        <p class="user"><strong>{{from}}</strong> @{{handle}}</p>
+        <p>{{text}} - <span title="{{posted}}">{{posted}}</span></p>
+      </div>
+    </li>
+  {{/tweets}}
+</script>
