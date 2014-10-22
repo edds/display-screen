@@ -79,7 +79,7 @@ body {
       line-height: 1;
     }
     li:nth-child(1){
-      -webkit-animation: fade-in .5s;
+      -webkit-animation: fade-in 1s;
     }
   }
 }
@@ -158,6 +158,6 @@ body {
   li:nth-child(1){ font-size: 160%; }
 }
 @-webkit-keyframes fade-in {
-  0%   { margin-top: -35px; opacity: 0;}
-  100% { margin-top: 0; opacity: 1;}
+  0%   { opacity: 0;}
+  100% { opacity: 1;}
 }

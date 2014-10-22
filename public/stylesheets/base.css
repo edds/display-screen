@@ -61,13 +61,13 @@ body {
   margin: 0;
   padding: 0; }
   .searches ul li {
-    margin: 5px 0;
-    padding: 0;
+    margin: 0;
+    padding: 5px 0;
     list-style: none;
     font-size: 25px;
     line-height: 1; }
   .searches ul li:nth-child(1) {
-    -webkit-animation: fade-in .5s; }
+    -webkit-animation: fade-in 1s; }
 
 .traffic {
   background: #2b8cc4;
@@ -126,9 +126,7 @@ body {
 
 @-webkit-keyframes fade-in {
   0% {
-    margin-top: -35px;
     opacity: 0; }
 
   100% {
-    margin-top: 0;
     opacity: 1; } }
