@@ -17,19 +17,30 @@ body {
 
 .top-bar {
   background: #0b0c0c;
-  padding: 10px 20px; }
+  padding: 15px 20px 10px; }
   .top-bar .inner {
     position: relative;
     width: 166px;
     height: 30px;
-    overflow: hidden; }
+    overflow: hidden;
+    font-weight: bold;
+    font-size: 30px;
+    line-height: 1em;
+    text-decoration: none;
+    text-rendering: optimizeLegibility;
+    margin-bottom: -1px;
+    padding-bottom: 1px;
+    color: #fff; }
     .top-bar .inner img {
-      position: absolute;
-      left: -166px;
-      top: 0;
-      border: none;
-      width: 200%;
-      height: 300%; }
+      position: relative;
+      top: -2px;
+      width: 35px;
+      height: 31px;
+      padding-right: 6px;
+      float: left;
+      display: inline;
+      line-height: inherit;
+      border: none; }
 
 .box {
   height: calc(100% - 210px);
@@ -44,7 +55,7 @@ body {
       height: 40%; }
 
 .box-inner {
-  padding: 20px; }
+  padding: 15px; }
 
 .small-box {
   overflow: hidden;
@@ -62,7 +73,7 @@ body {
   padding: 0; }
   .searches ul li {
     margin: 0;
-    padding: 5px 0;
+    padding: 5px 0 10px;
     list-style: none;
     font-size: 25px;
     line-height: 1; }
@@ -70,7 +81,7 @@ body {
     -webkit-animation: fade-in 1s; }
 
 .traffic {
-  background: #2b8cc4;
+  background: #005EA5;
   color: #fff;
   text-align: left; }
   .traffic h1 {
