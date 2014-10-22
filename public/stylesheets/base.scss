@@ -110,10 +110,14 @@ body {
       width: 50%;
     }
   }
-  path, line.axis {
+  .axis path {
     stroke: #fff;
     stroke-width: 2;
     fill: none;
+  }
+  path.area {
+    fill: #fff;
+    stroke-width: 0;
   }
   .label {
     fill: #fff;

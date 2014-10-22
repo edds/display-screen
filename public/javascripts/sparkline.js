@@ -7,7 +7,7 @@
 
   var makeScales = function(data, width, height) {
     var maxY = d3.max(data),
-        minY = d3.min(data);
+        minY = 0; //d3.min(data); force the graph to start at zero.
 
     maxY = maxY + (maxY * 0.01);
     minY = minY - (minY * 0.01);
@@ -28,13 +28,15 @@
             .attr('height', height)
             .attr('class', 'sparkline'),
         scale = makeScales(data, width, height),
-        line = d3.svg.line()
+        area = d3.svg.area()
           .interpolate('basis')
           .x(function(d, i) { return scale.x(i); })
-          .y(function(d, i) { return scale.y(d); }),
+          .y0(height)
+          .y1(function(d, i) { return scale.y(d); }),
         path = svg.append('svg:path')
+          .attr('class', 'area')
           .data([data])
-          .attr('d', line);
+          .attr('d', area);
 
     return {
       update: function(newData){
@@ -42,7 +44,7 @@
         svg.selectAll('path')
         .data([newData])
           .attr("transform", "translate(" + scale.x(1) + ")")
-          .attr('d', line)
+          .attr('d', area)
           .transition()
           .duration(500)
           .ease('linear')
