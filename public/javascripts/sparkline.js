@@ -18,22 +18,17 @@
     return {x: x, y: y};
   };
 
-  var sparkline = function(el, options){
+  var sparkline = function(container, options){
     var width = options.width || 200,
         height = options.height || 20,
         data = options.data || [],
-        svg = d3.select(el)
-          .append('svg:svg')
-            .attr('width', width)
-            .attr('height', height)
-            .attr('class', 'sparkline'),
         scale = makeScales(data, width, height),
         area = d3.svg.area()
           .interpolate('basis')
           .x(function(d, i) { return scale.x(i); })
           .y0(height)
           .y1(function(d, i) { return scale.y(d); }),
-        path = svg.append('svg:path')
+        path = container.append('svg:path')
           .attr('class', 'area')
           .data([data])
           .attr('d', area);
@@ -41,7 +36,7 @@
     return {
       update: function(newData){
         scale = makeScales(newData, width, height);
-        svg.selectAll('path')
+        container.selectAll('path')
         .data([newData])
           .attr("transform", "translate(" + scale.x(1) + ")")
           .attr('d', area)
@@ -58,7 +53,7 @@
         height = options.height || 120,
         padding = options.padding || 20,
         data = options.data || [],
-        slOptions = {
+        sparklineOptions = {
           width: width - padding,
           height: height - padding,
           data: data
@@ -66,10 +61,11 @@
         svg = d3.select(el).append('svg:svg')
           .attr('width', width)
           .attr('height', height),
-        sl = svg.append('svg:svg')
-          .attr('x', padding)
-          .attr('clip-path', 'url(#clip)'),
-        slObj = sparkline(sl[0][0], slOptions);
+        sparklineGroup = svg.append('g')
+          .attr('transform', 'translate('+(padding+1)+', -1)')
+          .attr('clip-path', 'url(#clip)')
+          .attr('class', 'sparkline'),
+        slObj = sparkline(sparklineGroup, sparklineOptions);
 
     svg.append('svg:clipPath')
       .attr('id', 'clip')
