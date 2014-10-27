@@ -132,6 +132,12 @@ body {
     fill: #fff;
     stroke-width: 0;
   }
+  path.trend {
+    fill: none;
+    stroke: #999;
+    stroke-width: 2;
+    stroke-dasharray: 6,1;
+  }
   .label {
     fill: #fff;
     font-size: 16px;

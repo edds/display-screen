@@ -5,14 +5,14 @@
 
   if(typeof root.matrix === 'undefined'){ root.matrix = {}; }
 
-  var makeScales = function(data, width, height) {
-    var maxY = d3.max(data),
+  var makeScales = function(data, trend, width, height) {
+    var maxY = d3.max([ d3.max(data), d3.max(trend)] ),
         minY = 0; //d3.min(data); force the graph to start at zero.
 
     maxY = maxY + (maxY * 0.01);
     minY = minY - (minY * 0.01);
 
-    var x = d3.scale.linear().domain([0, data.length-1]).range([-(width/data.length), width+(width/data.length)]),
+    var x = d3.scale.linear().domain([0, data.length-1]).range([0, width]),
         y = d3.scale.linear().domain([minY, maxY]).range([height, 0]);
 
     return {x: x, y: y};
@@ -22,28 +22,33 @@
     var width = options.width || 200,
         height = options.height || 20,
         data = options.data || [],
-        scale = makeScales(data, width, height),
+        trend = options.trend || [],
+        scale = makeScales(data, trend, width, height),
         area = d3.svg.area()
           .interpolate('basis')
           .x(function(d, i) { return scale.x(i); })
           .y0(height)
           .y1(function(d, i) { return scale.y(d); }),
         path = container.append('svg:path')
-          .attr('class', 'area')
+          .attr('class', 'data area')
           .data([data])
-          .attr('d', area);
+          .attr('d', area),
+        trendLine = d3.svg.line()
+          .interpolate('basis')
+          .x(function(d, i) { return scale.x(i); })
+          .y(function(d, i) { return scale.y(d); }),
+        trendPath = container.append('svg:path')
+          .attr('class', 'trend area')
+          .data([trend])
+          .attr('d', trendLine);
 
     return {
-      update: function(newData){
-        scale = makeScales(newData, width, height);
-        container.selectAll('path')
-        .data([newData])
-          .attr("transform", "translate(" + scale.x(1) + ")")
-          .attr('d', area)
-          .transition()
-          .duration(500)
-          .ease('linear')
-          .attr("transform", "translate(" + scale.x(0) + ")");
+      update: function(newData, trend){
+        scale = makeScales(newData, trend, width, height);
+        container.selectAll('path.data')
+          .data([newData]).attr('d', area);
+        container.selectAll('path.trend')
+          .data([trend]).attr('d', trendLine);
       }
     };
   };
@@ -53,10 +58,12 @@
         height = options.height || 120,
         padding = options.padding || 20,
         data = options.data || [],
+        trend = options.trend || [],
         sparklineOptions = {
           width: width - padding,
           height: height - padding,
-          data: data
+          data: data,
+          trend: trend
         },
         svg = d3.select(el).append('svg:svg')
           .attr('width', width)
@@ -75,11 +82,7 @@
       .attr('width', width - padding)
       .attr('height', height - padding);
 
-    var scale = makeScales(data, width - padding, height - padding);
-
-    // Not sure I really understand why the range of the x-axis is set as it is
-    // by makeScales, but modifying it to something more sensible here.
-    scale.x.range([0, width]);
+    var scale = makeScales(data, trend, width - padding, height - padding);
 
     var xAxis = d3.svg.axis().scale(scale.x).ticks(0).tickSize(0),
         yAxis = d3.svg.axis().scale(scale.y).ticks(0).tickSize(0).orient('left');
@@ -107,8 +110,8 @@
           .text(d3.format(',')(d3.max(data)));
 
     return {
-      update: function(newData, xLabel){
-        slObj.update(newData);
+      update: function(newData, trend, xLabel){
+        slObj.update(newData, trend);
         yLab.text(d3.format(',')(d3.max(newData)));
         xLab.text(xLabel);
       }
