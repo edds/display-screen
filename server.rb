@@ -10,6 +10,7 @@ require 'active_support/core_ext/object'
 use Rack::Cache
 set :public_folder, 'public'
 set :bind, '0.0.0.0'
+set :protection, :except => :frame_options
 
 if ENV['USERNAME'] && ENV['PASSWORD']
   use Rack::Auth::Basic, 'Demo area' do |user, pass|
