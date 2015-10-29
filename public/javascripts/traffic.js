@@ -46,8 +46,9 @@
         if(dataByTime[dates[i]]){
           values.push(dataByTime[dates[i]]);
         } else {
-          // fill missing minutes, don't fill more than two though
-          if(values.length && values[values.length-1] !== values[values.length-2]){
+          // fill missing minutes, don't fill more than five though - samples
+          // are taken every 5 minutes
+          if(values.length && values[values.length-1] !== values[values.length-5]){
             values.push(values[values.length-1]);
           } else {
             values.push(0);
