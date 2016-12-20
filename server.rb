@@ -14,7 +14,7 @@ set :protection, :except => :frame_options
 
 if ENV['USERNAME'] && ENV['PASSWORD']
   use Rack::Auth::Basic, 'Demo area' do |user, pass|
-    user == ENV['USERNAME'] && pass = ENV['PASSWORD']
+    user == ENV['USERNAME'] && pass == ENV['PASSWORD']
   end
 end
 
