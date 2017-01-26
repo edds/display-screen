@@ -1,3 +1,7 @@
+# Overview
+
+Simple server to display real-time Google Analytics information about a web site.
+
 # Display Dashboard
 
 To run the server you will need the following `ENV` variables set:
